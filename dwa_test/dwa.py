@@ -6,6 +6,14 @@ import math
 
 # 基本函数
 # 正规化函数，将数据按最大最小值进行归一化处理
+
+# def min_max_normalize(data):
+#     data = np.array(data)
+#     min_val, max_val = np.min(data), np.max(data)
+#     if max_val == min_val:
+#         return np.zeros_like(data)
+#     return (data - min_val) / (max_val - min_val)
+
 def min_max_normalize(data):
     data = np.array(data)
     
@@ -217,7 +225,12 @@ class DWA():
         for scores in [score_heading_angles, score_heading_velos, score_obstacles]:
             scores = min_max_normalize(scores)
 
+        # score_heading_angles = min_max_normalize(score_heading_angles)
+        # score_heading_velos = min_max_normalize(score_heading_velos)
+        # score_obstacles = min_max_normalize(score_obstacles)
+
         score = 0.0
+        # score = -float('inf')
         for k in range(len(paths)):
             temp_score = self.weight_angle * score_heading_angles[k] + \
                          self.weight_velo * score_heading_velos[k] + \
@@ -288,49 +301,12 @@ class Const_goal():
         self.traj_g_y = []
 
     def calc_goal(self, time_step):
-        # if time_step <= 100:
-        #     g_x = 10.0
-        #     g_y = 10.0
-        # else:
-        #     g_x = -10.0
-        #     g_y = -10.0
-
-        if time_step <= 20:
-            g_x = 2.0
-            g_y = 2.0
-        elif time_step <= 40 and time_step > 20:
-            g_x = 4.0
-            g_y = 4.0
-        elif time_step <= 50 and time_step > 40:
-            g_x = 6.0
-            g_y = 6.0
-        elif time_step <= 60 and time_step > 50:
-            g_x = 8.0
-            g_y = 8.0
-        elif time_step <= 80 and time_step > 60:
+        if time_step <= 100:
             g_x = 10.0
             g_y = 10.0
-        elif time_step <= 100 and time_step > 80:
-            g_x = 5.0
-            g_y = 10.0
-        elif time_step <= 120 and time_step > 100:
-            g_x = 1.0
-            g_y = 8.0
-        elif time_step <= 140 and time_step > 120:
-            g_x = 1.0
-            g_y = 6.0
-        elif time_step <= 160 and time_step > 140:
-            g_x = 1.0
-            g_y = 4.0
-        elif time_step <= 180 and time_step > 160:
-            g_x = 4.0
-            g_y = 4.0
-        elif time_step <= 200 and time_step > 180:
-            g_x = 7.0
-            g_y = 4.0
         else:
-            g_x = 10.0
-            g_y = 7.0
+            g_x = -10.0
+            g_y = -10.0
 
         self.traj_g_x.append(g_x)
         self.traj_g_y.append(g_y)
@@ -340,13 +316,19 @@ class Const_goal():
 # 主控制类
 class Main_controller():
     def __init__(self):
+
+        self.samplingtime = 0.1
+
         self.robot = Two_wheeled_robot(0.0, 0.0, 0.0)
+
         self.goal_maker = Const_goal()
-        self.controller = DWA()
+
         self.obstacles = [Obstacle(4, 1, 0.25), Obstacle(0, 4.5, 0.25), 
                           Obstacle(3, 4.5, 0.25), Obstacle(5, 3.5, 0.25), 
                           Obstacle(7.5, 9.0, 0.25)]
-        self.samplingtime = 0.1
+        
+        self.controller = DWA()
+
 
     def run_to_goal(self):
         goal_flag = False
