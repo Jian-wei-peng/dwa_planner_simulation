@@ -39,22 +39,22 @@ def angle_range_corrector(angle):
     
     return angle
 
-# 绘制圆形轨迹
-def write_circle(center_x, center_y, angle, circle_size=0.2):  # 人的大小为半径15cm
-    circle_x = []  # 用于保存圆形的 x 坐标
-    circle_y = []  # 用于保存圆形的 y 坐标
+# # 绘制圆形轨迹
+# def write_circle(center_x, center_y, angle, circle_size=0.2):  # 人的大小为半径15cm
+#     circle_x = []  # 用于保存圆形的 x 坐标
+#     circle_y = []  # 用于保存圆形的 y 坐标
 
-    steps = 100  # 圆的分解度，100步足够精确
-    for i in range(steps):
-        # 根据圆的公式计算圆上的各个点
-        circle_x.append(center_x + circle_size * math.cos(i * 2 * math.pi / steps))
-        circle_y.append(center_y + circle_size * math.sin(i * 2 * math.pi / steps))
+#     steps = 100  # 圆的分解度，100步足够精确
+#     for i in range(steps):
+#         # 根据圆的公式计算圆上的各个点
+#         circle_x.append(center_x + circle_size * math.cos(i * 2 * math.pi / steps))
+#         circle_y.append(center_y + circle_size * math.sin(i * 2 * math.pi / steps))
     
-    # 绘制圆形的指示线（朝向指定角度的线段）
-    circle_line_x = [center_x, center_x + math.cos(angle) * circle_size]
-    circle_line_y = [center_y, center_y + math.sin(angle) * circle_size]
+#     # 绘制圆形的指示线（朝向指定角度的线段）
+#     circle_line_x = [center_x, center_x + math.cos(angle) * circle_size]
+#     circle_line_y = [center_y, center_y + math.sin(angle) * circle_size]
     
-    return circle_x, circle_y, circle_line_x, circle_line_y
+#     return circle_x, circle_y, circle_line_x, circle_line_y
 
 # 规则说明：
 # x, y, th 是机器人当前的状态

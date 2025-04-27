@@ -420,12 +420,19 @@ def main(config, robot_type):
     # 实例化DWA
     dwa = DWA(config, robot_type)
 
+    step = 0
     while True:
         # 调用DWA, 得到机器人控制指令和最优轨迹
         u, predicted_trajectory = dwa.dwa_control(x, goal, ob)
 
         # 利用运动学模型更新机器人状态
         x = diff_model(x, u, config.dt)
+
+        print('sim step:', step)
+        print('best cmd: ', u)
+        print('best trajectory: ', predicted_trajectory)
+        print('robot state: ', x)
+        print('------------------------------------------------------------')
 
         # 记录轨迹
         # np.vstack是按 行方向（垂直方向） 合并数组，动态扩展轨迹数据
@@ -457,6 +464,11 @@ def main(config, robot_type):
         # 程序暂停 0.001 秒（即 1 毫秒），然后继续执行后续代码。这个函数通常用于动态更新图形时，控制图形的刷新频率
         plt.pause(0.001)
 
+        if step >= 105:
+            break
+
+        step += 1
+
         # 机器人到目标点的位置
         dist_to_goal = math.hypot(x[0] - goal[0], x[1] - goal[1])
 
@@ -482,7 +494,7 @@ if __name__ == '__main__':
     config = Config()
 
     # main(config, RobotType.circle)
-    main(config, RobotType.rectangle)
+    main(config, RobotType.circle)
 
 
 
