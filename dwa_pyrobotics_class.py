@@ -428,11 +428,11 @@ def main(config, robot_type):
         # 利用运动学模型更新机器人状态
         x = diff_model(x, u, config.dt)
 
-        print('sim step:', step)
-        print('best cmd: ', u)
-        print('best trajectory: ', predicted_trajectory)
-        print('robot state: ', x)
-        print('------------------------------------------------------------')
+        # print('sim step:', step)
+        # print('best cmd: ', u)
+        # print('best trajectory: ', predicted_trajectory)
+        # print('robot state: ', x)
+        # print('------------------------------------------------------------')
 
         # 记录轨迹
         # np.vstack是按 行方向（垂直方向） 合并数组，动态扩展轨迹数据
