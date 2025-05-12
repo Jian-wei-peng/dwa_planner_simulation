@@ -115,8 +115,9 @@ class DWA():
         '''
         评价所有候选轨迹, 选择最优轨迹
         '''
+        heading_cost, distance_cost, obstacle_cost, velocity_cost = [], [], [], []
+
         # 计算每条候选轨迹的代价值, 去掉碰撞轨迹 (candidate_trajectory是列表, 其中每个元素都是np.ndarray, (x,y,yaw,v,w))
-        heading_cost, distance_cost,obstacle_cost, velocity_cost = [], [], [], []
         for trajectory in candidate_trajectory:
             # 去掉碰撞轨迹
             obs_cost = self._obstacle_cost(trajectory, obstacles)
